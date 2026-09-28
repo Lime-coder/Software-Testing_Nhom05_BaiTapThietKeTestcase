@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "test:multiplication": "playwright test --config=tests/test-script/playwright.config.js tests/test-script/multiplication",
+    "test:concatenation": "playwright test --config=tests/test-script/playwright.config.js tests/test-script/concatenation",
     "test:division": "playwright test --config=tests/test-script/playwright.config.js tests/test-script/division"
   },
   "devDependencies": {
