@@ -4,7 +4,8 @@
   "scripts": {
     "test:multiplication": "playwright test --config=tests/test-script/playwright.config.js tests/test-script/multiplication",
     "test:concatenation": "playwright test --config=tests/test-script/playwright.config.js tests/test-script/concatenation",
-    "test:division": "playwright test --config=tests/test-script/playwright.config.js tests/test-script/division"
+    "test:division": "playwright test --config=tests/test-script/playwright.config.js tests/test-script/division",
+    "test:addition": "playwright test --config=tests/test-script/playwright.config.js tests/test-script/addition"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0"
