@@ -2,7 +2,8 @@
   "name": "software-testing-nhom05",
   "private": true,
   "scripts": {
-    "test:multiplication": "playwright test --config=tests/test-script/playwright.config.js tests/test-script/multiplication"
+    "test:multiplication": "playwright test --config=tests/test-script/playwright.config.js tests/test-script/multiplication",
+    "test:division": "playwright test --config=tests/test-script/playwright.config.js tests/test-script/division"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0"
