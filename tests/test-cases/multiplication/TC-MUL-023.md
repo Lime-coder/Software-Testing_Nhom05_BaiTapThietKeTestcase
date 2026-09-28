@@ -41,4 +41,4 @@ Nguyễn Phúc Hậu
 
 ## Status / Related bugs
 
-Not Run / None
+Passed / None

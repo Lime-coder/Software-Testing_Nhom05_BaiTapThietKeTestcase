@@ -14,7 +14,7 @@ class MultiplicationPage {
     this.errorMessage = page.getByTestId('errorMsgField');
   }
 
-  async goto(build = '5') {
+  async goto(build = process.env.CALCULATOR_BUILD || '5') {
     const url =
       process.env.MULTIPLICATION_URL ||
       'https://testsheepnz.github.io/BasicCalculator.html';
@@ -32,7 +32,20 @@ class MultiplicationPage {
   async multiply({ first, second, integerOnly }) {
     await this.firstNumberInput.fill(first);
     await this.secondNumberInput.fill(second);
-    await this.integerOnlyCheckbox.setChecked(integerOnly);
+
+    const integerOnlyEnabled = await this.integerOnlyCheckbox.isEnabled();
+    const integerOnlyChecked = await this.integerOnlyCheckbox.isChecked();
+
+    if (!integerOnlyEnabled && integerOnlyChecked !== integerOnly) {
+      throw new Error(
+        `Không thể đặt Integers only thành ${integerOnly ? 'On' : 'Off'}: checkbox đang bị vô hiệu hóa ở trạng thái ${integerOnlyChecked ? 'On' : 'Off'}.`,
+      );
+    }
+
+    if (integerOnlyEnabled) {
+      await this.integerOnlyCheckbox.setChecked(integerOnly);
+    }
+
     await this.calculateButton.click();
   }
 

@@ -37,4 +37,4 @@ Nguyễn Phúc Hậu
 
 ## Status / Related bugs
 
-Not Run / None
+Failed / BUG-MUL-001
