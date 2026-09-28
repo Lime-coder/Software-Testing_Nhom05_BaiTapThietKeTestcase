@@ -3,6 +3,17 @@ const { additionCases } = require('./addition.data');
 const { AdditionPage } = require('./addition.page');
 
 test.describe('Addition', () => {
+  test.afterEach(async ({ page }, testInfo) => {
+    if (testInfo.status !== testInfo.expectedStatus) {
+      const testIdMatch = testInfo.title.match(/(TC-ADDITION-\d+)/);
+      const testId = testIdMatch ? testIdMatch[1] : 'unknown';
+      const build = process.env.CALCULATOR_BUILD || '0';
+      // Tự động lưu ảnh vào thư mục evidence khi fail
+      const screenshotPath = `tests/test-summary/evidence/${testId}-build-${build}-failed.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+    }
+  });
+
   for (const testCase of additionCases) {
     test(`${testCase.id}: ${testCase.name}`, async ({ page }, testInfo) => {
       testInfo.annotations.push({
