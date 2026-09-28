@@ -1,0 +1,55 @@
+const { expect } = require('@playwright/test');
+
+class MultiplicationPage {
+  constructor(page) {
+    this.page = page;
+    this.buildSelect = page.getByTestId('selectBuild');
+    this.firstNumberInput = page.getByTestId('number1Field');
+    this.secondNumberInput = page.getByTestId('number2Field');
+    this.operationSelect = page.getByTestId('selectOperationDropdown');
+    this.integerOnlyCheckbox = page.getByTestId('integerSelect');
+    this.calculateButton = page.getByTestId('calculateButton');
+    this.clearButton = page.getByTestId('clearButton');
+    this.result = page.getByTestId('numberAnswerField');
+    this.errorMessage = page.getByTestId('errorMsgField');
+  }
+
+  async goto(build = '5') {
+    const url =
+      process.env.MULTIPLICATION_URL ||
+      'https://testsheepnz.github.io/BasicCalculator.html';
+
+    await this.page.goto(url);
+    await expect(this.page).toHaveTitle('Basic Calculator');
+    await this.buildSelect.selectOption({ label: build });
+    await this.operationSelect.selectOption({ label: 'Multiply' });
+  }
+
+  async selectBuild(build) {
+    await this.buildSelect.selectOption({ label: build });
+  }
+
+  async multiply({ first, second, integerOnly }) {
+    await this.firstNumberInput.fill(first);
+    await this.secondNumberInput.fill(second);
+    await this.integerOnlyCheckbox.setChecked(integerOnly);
+    await this.calculateButton.click();
+  }
+
+  async expectOutput(expected) {
+    if (/^Number [12] is not a number$/.test(expected)) {
+      await expect(this.errorMessage).toHaveText(expected);
+      await expect(this.result).toHaveValue('');
+      return;
+    }
+
+    await expect(this.errorMessage).toHaveText('');
+    await expect(this.result).toHaveValue(expected);
+  }
+
+  async clear() {
+    await this.clearButton.click();
+  }
+}
+
+module.exports = { MultiplicationPage };
